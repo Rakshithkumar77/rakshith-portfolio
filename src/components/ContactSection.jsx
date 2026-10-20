@@ -1,33 +1,79 @@
 import {
-  Instagram,
+  Github,
   Linkedin,
   Mail,
   MapPin,
   Phone,
   Send,
-  Twitch,
-  Twitter,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 
+const CONTACT_EMAIL = "rakshithkumar415@gmail.com";
+
 export const ContactSection = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const form = e.target;
+    const name = form.name.value.trim();
+    const email = form.email.value.trim();
+    const message = form.message.value.trim();
 
     setIsSubmitting(true);
 
-    setTimeout(() => {
+    try {
+      const response = await fetch(
+        `https://formsubmit.co/ajax/${CONTACT_EMAIL}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            message,
+            _subject: `Portfolio message from ${name}`,
+            _template: "table",
+            _captcha: "false",
+          }),
+        }
+      );
+
+      const result = await response.json();
+
+      if (!response.ok || result.success === "false") {
+        throw new Error(result.message || "Failed to send message");
+      }
+
+      form.reset();
       toast({
         title: "Message sent!",
         description: "Thank you for your message. I'll get back to you soon.",
       });
+    } catch {
+      const mailto = new URL(`mailto:${CONTACT_EMAIL}`);
+      mailto.searchParams.set("subject", `Portfolio message from ${name}`);
+      mailto.searchParams.set(
+        "body",
+        `Name: ${name}\nEmail: ${email}\n\n${message}`
+      );
+      window.location.href = mailto.toString();
+
+      toast({
+        title: "Opening your email app",
+        description:
+          "If nothing opens, email me directly at rakshithkumar415@gmail.com.",
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1500);
+    }
   };
   return (
     <section id="contact" className="py-24 px-4 relative bg-secondary/30">
@@ -56,10 +102,10 @@ export const ContactSection = () => {
                 <div>
                   <h4 className="font-medium"> Email</h4>
                   <a
-                    href="mailto:hello@gmail.com"
+                    href="mailto:rakshithkumar415@gmail.com"
                     className="text-muted-foreground hover:text-primary transition-colors"
                   >
-                    hello@gmail.com
+                    rakshithkumar415@gmail.com
                   </a>
                 </div>
               </div>
@@ -69,11 +115,8 @@ export const ContactSection = () => {
                 </div>
                 <div>
                   <h4 className="font-medium"> Phone</h4>
-                  <a
-                    href="tel:+11234567890"
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    +1 (123) 456-7890
+                  <a className="text-muted-foreground hover:text-primary transition-colors">
+                    Available upon request
                   </a>
                 </div>
               </div>
@@ -84,7 +127,7 @@ export const ContactSection = () => {
                 <div>
                   <h4 className="font-medium"> Location</h4>
                   <a className="text-muted-foreground hover:text-primary transition-colors">
-                    Vancouver, BC, Canada
+                    Available upon request
                   </a>
                 </div>
               </div>
@@ -93,29 +136,28 @@ export const ContactSection = () => {
             <div className="pt-8">
               <h4 className="font-medium mb-4"> Connect With Me</h4>
               <div className="flex space-x-4 justify-center">
-                <a href="#" target="_blank">
+                <a
+                  href="https://linkedin.com/in/rakshith-kumar-s-b6b841300"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <Linkedin />
                 </a>
-                <a href="#" target="_blank">
-                  <Twitter />
-                </a>
-                <a href="#" target="_blank">
-                  <Instagram />
-                </a>
-                <a href="#" target="_blank">
-                  <Twitch />
+                <a
+                  href="https://github.com/Rakshithkumar77"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Github />
                 </a>
               </div>
             </div>
           </div>
 
-          <div
-            className="bg-card p-8 rounded-lg shadow-xs"
-            onSubmit={handleSubmit}
-          >
+          <div className="bg-card p-8 rounded-lg shadow-xs">
             <h3 className="text-2xl font-semibold mb-6"> Send a Message</h3>
 
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
                 <label
                   htmlFor="name"
@@ -130,7 +172,7 @@ export const ContactSection = () => {
                   name="name"
                   required
                   className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-hidden foucs:ring-2 focus:ring-primary"
-                  placeholder="Pedro Machado..."
+                  placeholder="Your name..."
                 />
               </div>
 

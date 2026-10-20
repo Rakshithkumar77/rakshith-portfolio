@@ -2,36 +2,56 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 
 const skills = [
-  // Frontend
-  { name: "HTML/CSS", level: 95, category: "frontend" },
-  { name: "JavaScript", level: 90, category: "frontend" },
-  { name: "React", level: 90, category: "frontend" },
-  { name: "TypeScript", level: 85, category: "frontend" },
-  { name: "Tailwind CSS", level: 90, category: "frontend" },
-  { name: "Next.js", level: 80, category: "frontend" },
+  // Programming Languages
+  { name: "Java", level: 75, category: "languages" },
+  { name: "JavaScript", level: 75, category: "languages" },
+  { name: "SQL", level: 75, category: "languages" },
+  { name: "HTML5", level: 75, category: "languages" },
+  { name: "CSS3", level: 75, category: "languages" },
 
-  // Backend
-  { name: "Node.js", level: 80, category: "backend" },
-  { name: "Express", level: 75, category: "backend" },
-  { name: "MongoDB", level: 70, category: "backend" },
-  { name: "PostgreSQL", level: 65, category: "backend" },
-  { name: "GraphQL", level: 60, category: "backend" },
+  // Backend Development
+  { name: "Java", level: 75, category: "backend" },
+  { name: "Spring Boot", level: 75, category: "backend" },
+  { name: "REST API Development", level: 75, category: "backend" },
+  { name: "Maven", level: 75, category: "backend" },
 
-  // Tools
-  { name: "Git/GitHub", level: 90, category: "tools" },
-  { name: "Docker", level: 70, category: "tools" },
-  { name: "Figma", level: 85, category: "tools" },
-  { name: "VS Code", level: 95, category: "tools" },
+  // Frontend Development
+  { name: "React.js", level: 75, category: "frontend" },
+  { name: "HTML5", level: 75, category: "frontend" },
+  { name: "CSS3", level: 75, category: "frontend" },
+  { name: "JavaScript", level: 75, category: "frontend" },
+
+  // Databases
+  { name: "MySQL", level: 75, category: "databases" },
+  { name: "DBMS", level: 75, category: "databases" },
+  { name: "SQL", level: 75, category: "databases" },
+
+  // Developer Tools
+  { name: "Git", level: 75, category: "tools" },
+  { name: "GitHub", level: 75, category: "tools" },
+  { name: "Postman", level: 75, category: "tools" },
+  { name: "VS Code", level: 75, category: "tools" },
 ];
 
-const categories = ["all", "frontend", "backend", "tools"];
+const categories = [
+  "all",
+  "languages",
+  "backend",
+  "frontend",
+  "databases",
+  "tools",
+];
 
 export const SkillsSection = () => {
   const [activeCategory, setActiveCategory] = useState("all");
 
-  const filteredSkills = skills.filter(
-    (skill) => activeCategory === "all" || skill.category === activeCategory
-  );
+  const filteredSkills =
+    activeCategory === "all"
+      ? skills.filter(
+          (skill, index, allSkills) =>
+            allSkills.findIndex((item) => item.name === skill.name) === index
+        )
+      : skills.filter((skill) => skill.category === activeCategory);
   return (
     <section id="skills" className="py-24 px-4 relative bg-secondary/30">
       <div className="container mx-auto max-w-5xl">

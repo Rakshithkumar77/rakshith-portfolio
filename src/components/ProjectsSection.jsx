@@ -3,32 +3,43 @@ import { ArrowRight, ExternalLink, Github } from "lucide-react";
 const projects = [
   {
     id: 1,
-    title: "SaaS Landing Page",
-    description: "A beautiful landing page app using React and Tailwind.",
+    title: "Smart Placement Management System",
+    description:
+      "Full-stack placement portal with Student, Recruiter, and Admin modules. Includes REST APIs for resume uploads, job application tracking, and eligibility verification, a normalized MySQL database, and a dashboard for application status.",
     image: "/projects/project1.png",
-    tags: ["React", "TailwindCSS", "Supabase"],
+    tags: ["Java", "Spring Boot", "React.js", "MySQL"],
     demoUrl: "#",
     githubUrl: "#",
   },
   {
     id: 2,
-    title: "Orbit Analytics Dashboard",
+    title: "EcoCart",
     description:
-      "Interactive analytics dashboard with data visualization and filtering capabilities.",
+      "Full-stack e-commerce platform with a customer storefront and an admin dashboard. Includes authentication, role-based access, and REST APIs for product management, filtering, categories, and orders.",
     image: "/projects/project2.png",
-    tags: ["TypeScript", "D3.js", "Next.js"],
+    tags: ["Java", "Spring Boot", "React.js", "MySQL"],
+    demoUrl: "#",
+    githubUrl: "https://github.com/Rakshithkumar77/EcoCart",
+  },
+  {
+    id: 3,
+    title: "Collabo — Real-Time Collaborative Web IDE",
+    description:
+      "Collaborative web-based coding environment with real-time communication using WebSockets and code execution through the Piston API.",
+    image: "/projects/project3.png",
+    tags: ["React.js", "JavaScript", "WebSockets", "Piston API"],
     demoUrl: "#",
     githubUrl: "#",
   },
   {
-    id: 3,
-    title: "E-commerce Platform",
+    id: 4,
+    title: "Real-Time American Sign Language to Text Conversion",
     description:
-      "Full-featured e-commerce platform with user authentication and payment processing.",
-    image: "/projects/project3.png",
-    tags: ["React", "Node.js", "Stripe"],
+      "Computer vision application that recognizes American Sign Language gestures and converts them into text using OpenCV and MediaPipe for hand tracking and gesture processing.",
+    image: "/projects/project1.png",
+    tags: ["Python", "OpenCV", "MediaPipe"],
     demoUrl: "#",
-    githubUrl: "#",
+    githubUrl: "https://github.com/Rakshithkumar77/ASLTOTEXT",
   },
 ];
 
@@ -100,7 +111,7 @@ export const ProjectsSection = () => {
           <a
             className="cosmic-button w-fit flex items-center mx-auto gap-2"
             target="_blank"
-            href="https://github.com/machadop1407"
+            href="https://github.com/Rakshithkumar77"
           >
             Check My Github <ArrowRight size={16} />
           </a>
